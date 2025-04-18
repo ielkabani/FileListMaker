@@ -17,37 +17,89 @@ import static java.nio.file.StandardOpenOption.CREATE;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import java.nio.*;
+import java.util.Scanner;
+
 import static java.nio.file.StandardOpenOption.*;
 
 
 public class FileListMaker {
     static ArrayList<String> list = new ArrayList<>();
+    static Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
-     try
-     {
-         OpenFile();
-         for (String l : list) {
-             System.out.println(l);
-         }
-         System.out.println("************************************");
+        boolean running = true;
+        String userCmd;
+        boolean fileNeedSave = false;
+        boolean fileOpened = false;
+        String rec="";
+        do {
+            displayMenu();
+            userCmd=SafeInput.getRegExString(in, "Please Enter a command","[AaIiDdMmOoSsCcQq]");
+            try {
+                switch (userCmd) {
+                    case "o":
+                    case "O":
+                        OpenFile();
+                        fileOpened = true;
+                        break;
+                    case "a":
+                    case "A":
+                        if(!fileOpened) {
+                            System.out.println("Please open the file first!");
+                            break;
+                        }
+                        else {
+                            rec = SafeInput.getNonZeroLenString(in, "Please enter a new list item");
+                            list.add(rec);
+                            fileNeedSave = true;
+                            break;
+                        }
+                    case "i":
+                    case "I":
 
-         list.add("Banana");
-         for (String l : list) {
-             System.out.println(l);
-         }
-         SaveFile();
-     }
-     catch (FileNotFoundException e)
-     {
-         System.out.println("File not found!!!");
-         e.printStackTrace();
-     }
-     catch (IOException e)
-     {
-         e.printStackTrace();
-     }
+                    case "d":
+                    case "D":
+
+                    case "m":
+                    case "M":
+
+                    case "c":
+                    case "C":
+
+                    case "s":
+                    case "S":
+
+                    case "q":
+                    case "Q":
+
+
+
+
+
+
+
+
+
+                }
+             /*   OpenFile();
+                for (String l : list) {
+                    System.out.println(l);
+                }
+                System.out.println("************************************");
+
+                list.add("Banana");
+                for (String l : list) {
+                    System.out.println(l);
+                }
+                SaveFile();*/
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found!!!");
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        while (running);
     }
-
     private static void OpenFile() throws IOException, FileNotFoundException
     {
         JFileChooser chooser = new JFileChooser();
@@ -106,5 +158,9 @@ public class FileListMaker {
         System.out.println("Data file written!");
 
     }
+    private static void displayMenu() {
+
+    }
+
 
 }
